@@ -18,5 +18,16 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
-- name: Release
-   uses: fnkr/github-action-ghr@v1.3
+      
+    - name: Release
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GHR_COMPRESS: xz
+          GHR_PATH: build/
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
