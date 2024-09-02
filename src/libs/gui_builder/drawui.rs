@@ -125,7 +125,7 @@ impl PortMapper {
                         format!("listenport={}",self.selectedPortMap.listenport).as_str(),
                         format!("listenaddress={}",self.selectedPortMap.listenaddress).as_str(),
                         format!("connectport={}",self.selectedPortMap.connectport).as_str(),
-                        format!("connectaddress={}",self.selectedPortMap.listenaddress).as_str(),
+                        format!("connectaddress={}",self.selectedPortMap.connectaddress).as_str(),
                     ])
                     .creation_flags(CREATE_NO_WINDOW)
                     .output()
