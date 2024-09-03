@@ -1,0 +1,47 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # This triggers the workflow only for version tags like v1.0.0
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        target: x86_64-pc-windows-msvc
+        profile: minimal
+
+    - name: Compile the Rust app
+      run: cargo build --release
+
+    - name: Archive the build output
+      uses: actions/upload-artifact@v3
+      with:
+        name: Port Mapper
+        path: target/release/Port Mapper.exe
+
+  release:
+    needs: build
+    runs-on: windows-latest
+
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: Port Mapper
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: target/release/Port Mapper.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
