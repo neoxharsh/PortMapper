@@ -1,6 +1,7 @@
 name: Build and Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*.*'  # This triggers the workflow only for version tags like v1.0.0
@@ -27,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Port Mapper
-        path: target/release/Port Mapper.exe
+        path: target/release/portmapper.exe
 
   release:
     needs: build
@@ -42,6 +43,6 @@ jobs:
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
-        files: target/release/Port Mapper.exe
+        files: target/release/portmapper.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
