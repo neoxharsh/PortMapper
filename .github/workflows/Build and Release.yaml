@@ -35,12 +35,18 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: "Port Mapper"
-
+    - name: Generate release tag
+      id: generate_release_tag
+      uses: amitsingh-007/next-release-tag@v6.0.0
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: 'v'
+          tag_template: 'yyyy.mm.dd.i'
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
         files: target/release/portmapper.exe
-        tag_name: '' # Leave empty to let GitHub create the tag automatically
+        tag_name: ${{ steps.generate_release_tag.outputs.next_release_tag }}
         draft: false
         prerelease: false
       env:
