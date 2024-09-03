@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Build"]
     types:
@@ -14,7 +15,7 @@ jobs:
     - name: Download build artifact
       uses: actions/download-artifact@v3
       with:
-        name: my-rust-app
+        name: Port Mapper
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
