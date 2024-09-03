@@ -22,9 +22,9 @@ jobs:
       run: cargo build --release
 
     - name: Archive the build output
-      uses: actions/upload-artifact@v4.4.0
+      uses: actions/upload-artifact@v4
       with:
-        name: Port Mapper.exe
+        name: Port Mapper
         path: target/release/portmapper.exe
   release:
     needs: build
@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Download build artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: "Port Mapper"
 
