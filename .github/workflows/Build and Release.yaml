@@ -3,29 +3,29 @@ name: Release
 on:
   workflow_dispatch:
 jobs:
-  build:
-    runs-on: windows-latest
+  # build:
+  #   runs-on: windows-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v3
 
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    # The desired behavior if
-        target: x86_64-pc-windows-msvc
-        profile: minimal
+  #   - name: Install Rust
+  #     uses: actions-rs/toolchain@v1
+  #     with:
+  #       toolchain: stable
+  #   # The desired behavior if
+  #       target: x86_64-pc-windows-msvc
+  #       profile: minimal
 
-    - name: Compile the Rust app
-      run: cargo build --release
+  #   - name: Compile the Rust app
+  #     run: cargo build --release
 
-    - name: Archive the build output
-      uses: actions/upload-artifact@v4
-      with:
-        name: Port Mapper
-        path: target/release/portmapper.exe
+  #   - name: Archive the build output
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: Port Mapper
+  #       path: target/release/portmapper.exe
   release:
     needs: build
     runs-on: windows-latest
@@ -40,6 +40,7 @@ jobs:
       uses: amitsingh-007/next-release-tag@v6.0.0
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          previous_tag: 'v1.0'
           tag_prefix: 'v'
           tag_template: 'yyyy.mm.dd.i'
     - name: Create GitHub Release
