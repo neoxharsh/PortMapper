@@ -27,7 +27,7 @@ jobs:
   #       name: Port Mapper
   #       path: target/release/portmapper.exe
   release:
-    needs: build
+    # needs: build
     runs-on: windows-latest
 
     steps:
